@@ -61,14 +61,16 @@
 
         if (input.length > 0) {
             results = findAllContaining(input);
-    
+
             if (results.length > 0) {
                 // spaces split up the words into smaller ones
-    
+
                 // If contains letters or dots, set as fixed position (@)
-    
-                // If contains +, *, or a-z 
-    
+
+                // If contains +, *, or a-z, set as anagram
+
+                // If contains [ ], letters inside are fixed, letters outside are anagramed
+
                 resultsBox.html(arrayToDisplay(findAllContaining(input)));
                 // resultsBox.text(findAllContaining(input));
             } else {
@@ -79,7 +81,7 @@
 
     function findAllContaining(searchString) {
         var count = 0;
-        var results = dict.filter(str => { 
+        var results = dict.filter(str => {
             if (str.includes(searchString) && count < maxResults) {
                 count++;
                 return true;
@@ -91,28 +93,61 @@
     }
 
     function arrayToDisplay(wordList) {
-        var displayString = 
-            "<div class='matches-heading'><p>Matches: " + wordList.length + "</p></div><ul class='results-list'>";
+        var curLen = 0;
+        var oldLen = -1;
+        var displayString =
+            "<div class='matches-heading'><p>Matches: " + wordList.length + "</p></div><ul>";
 
+        wordList = sortByLength(wordList); // Sort
         wordList.forEach(element => {
-            displayString += "<li>" + element + " <a href='https://www.google.com/search?q=define%3A" + element +"' target='_blank'><i class='fa-solid fa-circle-info'></a></i></li>";
+            oldLen = curLen;
+            curLen = element.length;
+
+            if (curLen == oldLen) {
+                displayString += "<li>" + element + " <a href='https://www.google.com/search?q=define%3A" + element + "' target='_blank'><i class='fa-solid fa-circle-info'></a></i></li>";
+            } else {
+                displayString += "</ul><p class='length-title'>" + element.length + " LETTERS</p><ul class='results-list'><li>" + element + " <a href='https://www.google.com/search?q=define%3A" + element + "' target='_blank'><i class='fa-solid fa-circle-info'></a></i></li>";
+            }
         });
         displayString += "</ul>";
 
         return displayString;
     }
 
-    function lengthSplitter(wordList) {
-        var wordList = [];
-        var lengthLists = {};
-
-        wordList.forEach(element => {
-            // if (lengthLists.)
+    function sortByLength(wordList) {
+           wordList.sort(function (a, b) {
+            // sort by length, then
+            if (a.length > b.length) {
+                return -1;
+            }
+            else if (a.length < b.length) {
+                return 1;
+            }
+            // sort alphabetically
+            else {
+                if (a < b) {
+                    return -1;
+                }
+                else if (a > b) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
         });
+
+        return wordList;
     }
 
     function regexBuilder() {
+        // spaces split up the words into smaller ones
 
+        // If contains letters or dots, set as fixed position (@)
+
+        // If contains +, *, or a-z, set as anagram
+
+        // If contains [ ], letters inside are fixed, letters outside are anagramed
     }
 
     function anagram() {
@@ -128,14 +163,15 @@
     }
 
 
-    $(".night-mode-box").on("change", function() {
+    $(".night-mode-box").on("change", function () {
         if (this.checked) {
             $("body, .results-box, .matches-heading").css("background-color", "black");
+            $(".results-box ul.results-list").css("background-color", "rgb(27, 27, 27)")
             $("p, i, label, h1, h2, h3, li").css("color", "white");
         }
-        else 
-        {
+        else {
             $("body, .results-box, .matches-heading").css("background-color", "white");
+            $(".results-box ul.results-list").css("background-color", "rgb(230, 230, 230)")
             $("p, i, label, h1, h2, h3, li").css("color", "black");
         }
     });
