@@ -17,6 +17,11 @@
     grid-area: header;
 }
 
+.search-field {
+    width: 16rem;
+    height: 1rem;
+}
+
 .results-box {
     max-height: 500px;
     overflow-y: scroll;
