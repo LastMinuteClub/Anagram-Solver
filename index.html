@@ -46,7 +46,7 @@
 <script>
     var input = "";
     var results = [];
-    var isNightMode = "true";
+    var isNightMode = "false"; // set default
     const maxResults = 5000;
     const searchField = $(".search-field");
     const resultsBox = $(".results-box");
@@ -59,22 +59,15 @@
         input = searchField.val().toLowerCase();
 
         if (input.length > 0) {
-            results = findAllContaining(input);
+            // spaces split up the words into smaller ones
 
-            if (results.length > 0) {
-                // spaces split up the words into smaller ones
+            // If contains letters or dots, set as fixed position (@)
 
-                // If contains letters or dots, set as fixed position (@)
+            // If contains +, *, or a-z, set as anagram
 
-                // If contains +, *, or a-z, set as anagram
+            // If contains [ ], letters inside are fixed, letters outside are anagramed
 
-                // If contains [ ], letters inside are fixed, letters outside are anagramed
-
-                resultsBox.html(arrayToDisplay(findAllContaining(input)));
-                // resultsBox.text(findAllContaining(input));
-            } else {
-                resultsBox.text("Not found");
-            }
+            resultsBox.html(arrayToDisplay(findAllContaining(input)));
         }
     }
 
@@ -114,7 +107,7 @@
     }
 
     function sortByLength(wordList) {
-           wordList.sort(function (a, b) {
+        wordList.sort(function (a, b) {
             // sort by length, then
             if (a.length > b.length) {
                 return -1;
@@ -163,16 +156,46 @@
 
 
     $(".night-mode-box").on("change", function () {
-        if (this.checked) {
-            $("body, .results-box, .matches-heading").css("background-color", "black");
-            $(".results-box ul.results-list").css("background-color", "rgb(27, 27, 27)")
-            $("p, i, label, h1, h2, h3, li").css("color", "white");
+        isNightMode = this.checked ? "true" : "false";
+        localStorage.setItem("nightMode", isNightMode);
+        console.log(isNightMode + " change");
+        console.log(localStorage.getItem("nightMode") + " storage");
+        setColourTheme(isNightMode);
+    });
+
+    function setColourTheme(nightMode) {
+        if (nightMode === "true") {
+            // $("body, .results-box, .matches-heading").css("background-color", "black");
+            // $(".results-box ul.results-list").css("background-color", "rgb(27, 27, 27)");
+            // $("p, i, label, h1, h2, h3, li").css("color", "white");
+            $(":root").css("--background-colour", "black");
+            $(":root").css("--text-colour", "white");
+            $(":root").css("--highlight-colour", "rgb(25, 25, 25)");
         }
         else {
-            $("body, .results-box, .matches-heading").css("background-color", "white");
-            $(".results-box ul.results-list").css("background-color", "rgb(230, 230, 230)")
-            $("p, i, label, h1, h2, h3, li").css("color", "black");
+            // $("body, .results-box, .matches-heading").css("background-color", "white");
+            // $(".results-box ul.results-list").css("background-color", "rgb(230, 230, 230)");
+            // $("p, i, label, h1, h2, h3, li").css("color", "black");
+            $(":root").css("--background-colour", "white");
+            $(":root").css("--text-colour", "black");
+            $(":root").css("--highlight-colour", "rgb(240, 240, 240)");
         }
+        console.log(nightMode);
+    }
+
+    $(document).ready(function () {
+        // set default
+        if (localStorage.getItem("nightMode") == null) {
+            localStorage.setItem("nightMode", "false");
+        }
+        // otherwise, get preference
+        else {
+            isNightMode = localStorage.getItem("nightMode");
+            console.log(isNightMode + " ready");
+            $(".night-mode-box").prop("checked", isNightMode == "false" ? false : true);
+            console.log(localStorage.getItem("nightMode") + " == true: " + (localStorage.getItem("nightMode") == true));
+        }
+        setColourTheme(isNightMode);
     });
 
     const dict = [

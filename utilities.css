@@ -7,11 +7,11 @@ body {
 }
 
 body {
-    background: black;
+    background: var(--background-colour);
 }
 
 p, h1, h2, i, li {
-    color: white;
+    color: var(--text-colour);
 }
 
 .container {
@@ -20,4 +20,9 @@ p, h1, h2, i, li {
     overflow: auto;
     padding: 0 40px;
     padding-top: 0.5rem;
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
 }
