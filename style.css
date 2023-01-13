@@ -33,8 +33,12 @@
 
 .navbar ul {
     display: flex;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     list-style: none;
+}
+
+.navbar ul {
+    cursor: pointer;
 }
 
 .navbar a {
@@ -54,6 +58,10 @@
 
 .navbar .flex {
     justify-content: space-between;
+}
+
+.navbar-title {
+    line-height: 1;
 }
 
 .search-field {
@@ -80,7 +88,8 @@
 }
 
 .search-button:hover {
-    background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.2));
+    box-shadow: 5px 5px 3px var(--text-colour);
+    /* background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.1)); */
 }
 
 .search-box {
