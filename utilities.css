@@ -22,6 +22,13 @@ p, h1, h2, i, li {
     padding-top: 0.5rem;
 }
 
+.flex {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    height: 100%;
+}
+
 .dark-mode {
     background-color: black;
     color: white;
