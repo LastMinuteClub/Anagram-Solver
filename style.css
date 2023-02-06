@@ -21,6 +21,13 @@
 
 .title {
     grid-area: header;
+    background: -webkit-linear-gradient(90deg, #3ceb91, #00b8b0 50%, #9416ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.title h2 {
+    font-size: 64px;
 }
 
 /* Navbar */
@@ -155,6 +162,10 @@
 .results-box a {
     color: var(--text-colour);
     text-decoration: none;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #3ceb91, #00b8b0 50%, #9416ff);
 }
 
 /* Tablet */
